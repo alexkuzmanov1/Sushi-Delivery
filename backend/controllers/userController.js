@@ -27,6 +27,7 @@ let loginUser = async (req, res) => {
         };
 
         let token = createToken(user._id);
+        console.log(token);
         res.json({ success: true, token });
         console.log("User logged in successfully");
     } catch (error) {
@@ -43,7 +44,7 @@ let registerUser = async (req, res) => {
     let { name, password, email} = req.body;
     try {
         //existing user check
-        let exists = await userModel.findOne({ email })
+        const exists = await userModel.findOne({ email })
         if(exists){
             return res.json({ 
                 success: false, 
@@ -68,17 +69,17 @@ let registerUser = async (req, res) => {
         }
 
         // password hashing
-        let salt = await bcrypt.genSalt(10);
-        let hashedPassword = await bcrypt.hash(password, salt);
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        let newUser = new userModel({
+        const newUser = new userModel({
             name: name,
             email: email,
             password: hashedPassword
         })
 
-        let user = await newUser.save();
-        let token = createToken(user._id);
+        const user = await newUser.save();
+        const token = createToken(user._id);
         res.status(200).json({ success: true, token });
 
         console.log("User registered successfully");
