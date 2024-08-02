@@ -42,9 +42,14 @@ let StoreContextProvider = (props) => {
         return total;
     };
 
+    let [loading, setLoading] = useState(false);
+
     let fetchFoodList = async () => {
+        setLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 5000));
         let response = await axios.get(`${url}/api/food/list`);
         setFoodList(response.data.data);
+        setLoading(false);
     }
 
     const loadCartData = async (token) => {
@@ -76,7 +81,8 @@ let StoreContextProvider = (props) => {
         getTotalCartAmount,
         url,
         token,
-        setToken
+        setToken,
+        loading
     };
 
     return (
