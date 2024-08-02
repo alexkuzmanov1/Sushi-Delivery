@@ -5,7 +5,7 @@ export const StoreContext = createContext(null);
 
 let StoreContextProvider = (props) => {
     let [cartItems, setCartItems] = useState({});
-    let url = "http://localhost:4000";
+    let url = "process.env.BACKEND_URL";
     let [token, setToken] = useState("")
     let [food_list, setFoodList] = useState([]);
 
@@ -46,7 +46,7 @@ let StoreContextProvider = (props) => {
 
     let fetchFoodList = async () => {
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         let response = await axios.get(`${url}/api/food/list`);
         setFoodList(response.data.data);
         setLoading(false);
@@ -70,7 +70,7 @@ let StoreContextProvider = (props) => {
         }
 
         loadData();
-    },[])
+    }, [])
 
     let contextValue = {
         food_list,

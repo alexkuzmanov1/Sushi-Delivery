@@ -7,7 +7,8 @@ const List = () => {
 
     let [list, setList] = useState([]);
 
-    let url = 'http://localhost:4000';
+    const url = import.meta.env.BACKEND_URL;
+
     let fetchList = async () => {
         let response = await axios.get(`${url}/api/food/list`)
         if(response.data.success){

@@ -1,14 +1,17 @@
-import orderModel from "../models/orderModel.js";
+import dotenv from 'dotenv';
 import userModel from "../models/userModel.js"; 
 import Stripe from "stripe";
 
 const stripe = Stripe('sk_test_51PhBLwRpnWmfYnVNWUyOvbLYLUZ0gTcyIcKfQuBXXd8Nz3bC1JsthEQ2DErrFtdtPMaSbDNXIUi2r5llozixahYl00VyjgG03U');
 
+import orderModel from "../models/orderModel.js";
+
+dotenv.config();
 
 //place order
 const placeOrder = async (req, res) => {
+    const frontendUrl = process.env.FRONTEND_URL;
 
-    const frontendUrl = 'http://localhost:5173';
 
     try {
         const newOrder = new orderModel({
