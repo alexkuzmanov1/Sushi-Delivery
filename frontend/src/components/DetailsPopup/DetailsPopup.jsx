@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './DetailsPopup.css'
 
 const DetailsPopup = ({ id, name, price, description, image, onClose }) => {
-  if (!id) return null;
   const [isVisible, setIsVisible] = useState(!!id);
+
+    useEffect(() => {
+        setIsVisible(!!id);
+    }, [id]);
 
   const handleOverlayClick = (e) => {
     if (e.target.className === 'details-popup-overlay') {
