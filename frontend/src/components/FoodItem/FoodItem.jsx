@@ -8,24 +8,26 @@ const FoodItem = ({id, name, price, description, image}) => {
   
     const {cartItems, addToCart, removeFromCart, url} = useContext(StoreContext);
 
-        const [showPopup, setShowPopup] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
 
-        const handleItemClick = () => {
-        setShowPopup(true);
-    } 
-
-        const handleClosePopup = () => {
-        setShowPopup(false);
+    const handleItemClick = () => {
+      setShowPopup(true);
+      console.log("Item clicked, showPopup set to true");
     }
-
+  
+    const handleClosePopup = () => {
+      console.log("Popup closed");
+      setShowPopup(false);
+    }
+  
     const handleAddToCart = (event) => {
-        event.stopPropagation();
-        addToCart(id);
+      event.stopPropagation();
+      addToCart(id);
     }
-
+  
     const handleRemoveFromCart = (event) => {
-        event.stopPropagation();
-        removeFromCart(id);
+      event.stopPropagation();
+      removeFromCart(id);
     }
   
   return (
@@ -49,7 +51,7 @@ const FoodItem = ({id, name, price, description, image}) => {
             <p className="food-item-desc">{description}</p>
             <p className="food-item-price">${price}</p>
         </div>
-        {showPopup && <DetailsPopup id={id} name={name} price={price} description={description} image={image} onClose={handleClosePopup} />}
+        {showPopup && <DetailsPopup id={id} name={name} price={price} description={description} image={image} onClose={handleClosePopup} isVisible={showPopup} />}
     </div>
   )
 }
