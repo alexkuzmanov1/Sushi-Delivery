@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 
 const Add = () => {
 
-    const url = import.meta.env.BACKEND_URL;
+    const url = import.meta.env.VITE_BACKEND_URL;
 
     let [image, setImage] = useState(false)
     let [data, setData] = useState({

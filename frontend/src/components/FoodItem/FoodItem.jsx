@@ -1,14 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './FoodItem.css'
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../context/StoreContext'
+import DetailsPopup from '../DetailsPopup/DetailsPopup'
 
 const FoodItem = ({id, name, price, description, image}) => {
   
     const {cartItems, addToCart, removeFromCart, url} = useContext(StoreContext);
+
+        const [showPopup, setShowPopup] = useState(false);
+
+        const handleItemClick = () => {
+        setShowPopup(true);
+    } 
+
+        const handleClosePopup = () => {
+        setShowPopup(false);
+    }
   
   return (
-    <div className='food-item'>
+    <div className='food-item' onClick={handleItemClick}>
         <div className="food-item-img-container">
             <img className='food-item-image' src={url + '/images/' + image} alt='' />
             {!cartItems[id]
@@ -28,6 +39,7 @@ const FoodItem = ({id, name, price, description, image}) => {
             <p className="food-item-desc">{description}</p>
             <p className="food-item-price">${price}</p>
         </div>
+        {showPopup && <DetailsPopup id={id} name={name} price={price} description={description} image={image} onClose={handleClosePopup} />}
     </div>
   )
 }

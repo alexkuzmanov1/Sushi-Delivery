@@ -4,8 +4,8 @@ import { createContext, useEffect, useState } from "react";
 export const StoreContext = createContext(null);
 
 let StoreContextProvider = (props) => {
+    const url = import.meta.env.VITE_BACKEND_URL;
     let [cartItems, setCartItems] = useState({});
-    let url = "process.env.BACKEND_URL";
     let [token, setToken] = useState("")
     let [food_list, setFoodList] = useState([]);
 

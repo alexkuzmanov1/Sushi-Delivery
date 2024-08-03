@@ -7,7 +7,7 @@ const List = () => {
 
     let [list, setList] = useState([]);
 
-    const url = import.meta.env.BACKEND_URL;
+    const url = import.meta.env.VITE_BACKEND_URL;
 
     let fetchList = async () => {
         let response = await axios.get(`${url}/api/food/list`)

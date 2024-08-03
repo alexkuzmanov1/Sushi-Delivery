@@ -9,7 +9,7 @@ import { assets } from '../../assets/assets'
 const Orders = () => {
 
   const [orders, setOrders] = useState([]);
-  const url = import.meta.env.BACKEND_URL;
+  const url = import.meta.env.VITE_BACKEND_URL;
   const fetchAllOrders = async () => {
     const response = await axios.get(url+'/api/order/listorders');
     if(response.data.success) {
