@@ -1,27 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './DetailsPopup.css'
+import { useRef } from 'react';
 
 const DetailsPopup = ({ id, name, price, description, image, onClose , isVisible}) => {
 
-  const handleOverlayClick = (e) => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
         onClose();
-  };
+      }
+    };
 
-  const handleContainerClick = (e) => {
-    e.stopPropagation();
-  };
-
-  const handleCloseClick = () => {
-    onClose();
-  };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
 
   if (!isVisible) return null;
 
 
   return (
-    <div className="details-popup-overlay" onClick={handleOverlayClick}>
-      <div className="details-popup-container" onClick={handleContainerClick}>
-        <button className="close-button" onClick={handleCloseClick}>X</button>
+    <div className="details-popup-overlay">
+    <div className="details-popup-container" ref={containerRef}>
         <h2>{name}</h2>
         <p>{description}</p>
         <p>Price: {price}</p>
