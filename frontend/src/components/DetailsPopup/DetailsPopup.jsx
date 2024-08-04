@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import './DetailsPopup.css'
 import { useRef } from 'react';
+import { StoreContext } from '../../context/StoreContext';
 
 const DetailsPopup = ({ id, name, price, description, image, onClose , isVisible}) => {
-
+  const {url} = useContext(StoreContext);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -24,11 +25,11 @@ const DetailsPopup = ({ id, name, price, description, image, onClose , isVisible
 
   return (
     <div className="details-popup-overlay">
-    <div className="details-popup-container" ref={containerRef}>
-        <h2>{name}</h2>
-        <p>{description}</p>
-        <p>Price: {price}</p>
-        {/* Add more item details as needed */}
+      <div className="details-popup-container" ref={containerRef}>
+        <img className="details-popup-image" src={url + '/images/' + image} alt={name} />
+        <h2 className="details-popup-name">{name}</h2>
+        <p className="details-popup-description">{description}</p>
+        <p className="details-popup-price">Price: ${price}</p>
       </div>
     </div>
   )
