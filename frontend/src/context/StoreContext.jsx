@@ -75,10 +75,11 @@ let StoreContextProvider = (props) => {
     const handleRatingChange = async (itemId, newValue) => {
         try {
             const endpoint = `${url}/api/ratings/updateRating`;
-            console.log('endpoint:', endpoint);
             await axios.post(endpoint, {
                 itemId,
                 rating: newValue
+            }, {
+                headers: { token }
             });
         } catch (error) {
             console.error('Error updating rating:', error);

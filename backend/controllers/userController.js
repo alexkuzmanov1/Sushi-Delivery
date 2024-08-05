@@ -28,10 +28,16 @@ let loginUser = async (req, res) => {
 
         let token = createToken(user._id);
         console.log(token);
-        res.json({ success: true, token });
+        res.json({ 
+            success: true,
+            token
+         });
         console.log("User logged in successfully");
     } catch (error) {
-        console.log(error, res.json({ success: false, message: "Internal Server Error"}));
+        console.log(error, res.json({ 
+            success: false, 
+            message: "Internal Server Error"
+        }));
     }
 };
 

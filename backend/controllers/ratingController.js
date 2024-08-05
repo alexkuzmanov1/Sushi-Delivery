@@ -1,4 +1,5 @@
 import RatingModel from "../models/ratingModel.js";
+import userModel from "../models/userModel.js";
 
 const getAverageRating = async (req, res) => {
     try {
@@ -27,11 +28,21 @@ const getAverageRating = async (req, res) => {
 const updateRating = async (req, res) => {
     try {
         const { itemId, rating } = req.body;
-        await RatingModel.create({ itemId, value: rating });
+        const userId = req.body.userId;
+
+        let userRating = await RatingModel.findOne({ itemId, userId });
+
+        if (userRating) {
+            userRating.value = rating;
+            await userRating.save();
+        } else {
+            await RatingModel.create({ itemId, value: rating, userId });
+        }
+
         res.json({
             success: true,
             message: 'Rating updated successfully',
-        })
+        });
     } catch (error) {
         console.error('Error updating rating:', error);
         res.json({
@@ -39,6 +50,6 @@ const updateRating = async (req, res) => {
             message: 'Internal server error',
         });
     }
-}
+};
 
 export { getAverageRating, updateRating };

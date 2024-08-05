@@ -6,6 +6,11 @@ const ratingSchema = mongoose.Schema({
         ref: 'Item',
         required: true,
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
     value: {
         type: Number,
         required: true,

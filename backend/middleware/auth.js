@@ -6,7 +6,7 @@ let authMiddleware = async (req, res, next) => {
      if (!token){
          return res.json({ 
              success: false, 
-             message: 'Token is required' 
+             message: 'Token is required'
          });
     }
 

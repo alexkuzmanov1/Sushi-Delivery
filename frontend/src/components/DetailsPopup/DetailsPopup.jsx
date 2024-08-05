@@ -32,6 +32,7 @@ const DetailsPopup = ({ id, name, price, description, image, onClose , isVisible
   }, [id, fetchAverageRating]);
 
   const handleRatingChangeWrapper = async (event, newValue) => {
+    
     setRating(newValue);
     await handleRatingChange(id, newValue);
   }
