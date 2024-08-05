@@ -60,6 +60,31 @@ let StoreContextProvider = (props) => {
         setCartItems(response.data.cartData);
     }
 
+    const fetchAverageRating = async (itemId) => {
+        try {
+            const response = await axios.post(`${url}/api/ratings/getAverageRating`, { itemId });
+            if(response.data.success) {
+                return response.data.data.averageRating;
+            }
+        } catch (error) {
+            console.error('Error fetching average rating:', error);
+        }
+        return 0;
+    };
+
+    const handleRatingChange = async (itemId, newValue) => {
+        try {
+            const endpoint = `${url}/api/ratings/updateRating`;
+            console.log('endpoint:', endpoint);
+            await axios.post(endpoint, {
+                itemId,
+                rating: newValue
+            });
+        } catch (error) {
+            console.error('Error updating rating:', error);
+        }
+    };
+
     useEffect(() => {
         async function loadData() {
         await fetchFoodList();
@@ -82,7 +107,9 @@ let StoreContextProvider = (props) => {
         url,
         token,
         setToken,
-        loading
+        loading,
+        fetchAverageRating,
+        handleRatingChange
     };
 
     return (

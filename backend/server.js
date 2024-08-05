@@ -6,6 +6,7 @@ import userRouter from './routes/userRoute.js';
 import 'dotenv/config';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
+import ratingRouter from './routes/ratingRouter.js';
 
 // app config
 let app = express();
@@ -24,6 +25,7 @@ app.use('/images', express.static('uploads'));
 app.use('/api/user', userRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
+app.use('/api/ratings', ratingRouter);
 
 app.get('/', (req, res) =>{
     res.send('API Working');
