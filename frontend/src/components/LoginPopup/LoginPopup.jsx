@@ -4,6 +4,7 @@ import { assets } from '../../assets/assets';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 import { validatePassword } from '../../utils/passwordValidation';
+import { toast } from 'react-toastify';
 
 const LoginPopup = ({ setShowLogin }) => {
   let { url, setToken } = useContext(StoreContext);
@@ -60,8 +61,9 @@ const LoginPopup = ({ setShowLogin }) => {
       setToken(response.data.token);
       localStorage.setItem('token', response.data.token);
       setShowLogin(false);
+      toast.success(currentState === "Login" ? "Login successful!" : "Registration successful!");
     } else {
-      alert(response.data.message);
+      toast.error(response.data.message);
     }
   };
 

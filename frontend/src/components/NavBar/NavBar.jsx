@@ -4,6 +4,7 @@ import { assets } from '../../assets/assets';
 import { Link, useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const NavBar = ({ setShowLogin }) => {
   let [menu, setMenu] = useState("home");
@@ -38,6 +39,7 @@ const NavBar = ({ setShowLogin }) => {
     setToken("");
     localStorage.removeItem('token');
     navigate('/');
+    toast.success('Logged out successfully');
   };
 
   return (
