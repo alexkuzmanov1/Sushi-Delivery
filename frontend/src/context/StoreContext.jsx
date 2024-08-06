@@ -8,6 +8,7 @@ let StoreContextProvider = (props) => {
     let [cartItems, setCartItems] = useState({});
     let [token, setToken] = useState("")
     let [food_list, setFoodList] = useState([]);
+    
 
     let addToCart = async (itemId) => {
         if (!cartItems[itemId]) {

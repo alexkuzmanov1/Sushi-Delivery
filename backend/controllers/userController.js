@@ -96,4 +96,23 @@ let registerUser = async (req, res) => {
     }
 };
 
-export { loginUser, registerUser };
+const getUserRole = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.body.userId);
+        if(!user){
+            return res.status(404).json({ 
+                success: false, 
+                message: "User not found" 
+            });
+        }
+        console.log("User role fetched successfully");
+        res.json({ 
+            success: true, 
+            role: user.role 
+        });
+    } catch (error) {
+        
+    }
+}
+
+export { loginUser, registerUser, getUserRole };
