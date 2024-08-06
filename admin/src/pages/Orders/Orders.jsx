@@ -10,11 +10,13 @@ const Orders = () => {
 
   const [orders, setOrders] = useState([]);
   const url = import.meta.env.VITE_BACKEND_URL;
+  
   const fetchAllOrders = async () => {
-    const response = await axios.get(url+'/api/order/listorders');
-    if(response.data.success) {
-      setOrders(response.data.data);
-      console.log(response.data.data);
+    const response = await axios.get(url + '/api/order/listorders');
+    if (response.data.success) {
+      const sortedOrders = response.data.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setOrders(sortedOrders);
+      console.log(sortedOrders);
     } else {
       toast.error(response.data.message);
     }

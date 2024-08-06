@@ -19,6 +19,7 @@ const Sidebar = () => {
           <img src={assets.order_icon} alt="" />
           <p>Orders</p>
         </NavLink>
+        <NavLink to='/archive' className='sidebar-option'>Archive</NavLink>
       </div>
     </div>
   )

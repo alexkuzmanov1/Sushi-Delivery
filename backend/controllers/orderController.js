@@ -141,6 +141,22 @@ const updateStatus = async (req, res) => {
             message: 'Status update error'
         })
     }
-}
+};
 
-export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus }
+const getArchivedOrders = async (req, res) => {
+    try {
+      const orders = await orderModel.find({ status: 'Delivered' }); // Assuming 'Delivered' status means archived
+      res.json({
+        success: true,
+        data: orders
+      });
+    } catch (error) {
+      console.log(error);
+      res.json({
+        success: false,
+        message: 'Internal Server Error'
+      });
+    }
+  };
+
+export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus, getArchivedOrders }
