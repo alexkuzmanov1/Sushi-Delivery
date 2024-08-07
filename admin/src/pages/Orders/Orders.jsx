@@ -1,50 +1,16 @@
-import React from 'react'
-import './Orders.css'
-import { useState } from 'react'
-import axios from 'axios'
-import {toast} from 'react-toastify'
-import { useEffect } from 'react'
-import { assets } from '../../assets/assets'
+// admin/src/pages/Orders/Orders.jsx
+import React, { useState, useEffect } from 'react';
+import './Orders.css';
+import { assets } from '../../assets/assets';
+import { fetchAllOrders, statusHandler, archiveOrderHandler } from '../../utils/orderUtils.js';
 
 const Orders = () => {
-
   const [orders, setOrders] = useState([]);
-  const url = import.meta.env.VITE_BACKEND_URL;
-  
-  const fetchAllOrders = async () => {
-    const response = await axios.get(url + '/api/order/listorders');
-    if (response.data.success) {
-      const sortedOrders = response.data.data.sort((a, b) => new Date(b.date) - new Date(a.date));
-      setOrders(sortedOrders);
-      console.log(sortedOrders);
-    } else {
-      toast.error(response.data.message);
-    }
-  }
-
-  const statusHandler = async (event, orderId) => {
-    const response = await axios.post(url+'/api/order/status', {
-      orderId, 
-      status: event.target.value})
-      if (response.data.success) {
-        await fetchAllOrders();
-      }
-  } 
-
-  const archiveOrderHandler = async (orderId) => {
-    const response = await axios.post(url + '/api/order/archiveorder', { orderId });
-    if (response.data.success) {
-      toast.success('Order archived successfully');
-      await fetchAllOrders();
-    } else {
-      toast.error(response.data.message);
-    }
-  };
 
   useEffect(() => {
-    fetchAllOrders();
-  },[])
-  
+    fetchAllOrders(setOrders);
+  }, []);
+
   return (
     <div className='order add'>
       <h3>Orders Page</h3>
@@ -54,13 +20,13 @@ const Orders = () => {
             <img src={assets.parcel_icon} alt="" />
             <div>
               <p className='order-item-food'>
-                  {order.items.map((item, index) => {
-                    if(index === order.items.length - 1) {
-                      return item.name + ' x ' + item.quantity;
-                    } else {
-                      return item.name + ' x ' + item.quantity + ', ';
-                    }
-                  })}
+                {order.items.map((item, index) => {
+                  if (index === order.items.length - 1) {
+                    return item.name + ' x ' + item.quantity;
+                  } else {
+                    return item.name + ' x ' + item.quantity + ', ';
+                  }
+                })}
               </p>
               <p className='order-item-name'>{order.address.firstName + ' ' + order.address.lastName}</p>
               <div className="order-item-address">
@@ -71,18 +37,17 @@ const Orders = () => {
             </div>
             <p>Items: {order.items.length}</p>
             <p>${order.amount}</p>
-            <select onChange={(event)=>statusHandler(event, order._id)} value={order.status}>
+            <select onChange={(event) => statusHandler(event, order._id, () => fetchAllOrders(setOrders))} value={order.status}>
               <option value="Food processing">Food processing</option>
               <option value="Out for delivery">Out for delivery</option>
               <option value="Delivered">Delivered</option>
             </select>
-            <button onClick={() => archiveOrderHandler(order._id)}>Archive</button>
+            <button onClick={() => archiveOrderHandler(order._id, () => fetchAllOrders(setOrders))}>Archive</button>
           </div>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-
-export default Orders
+export default Orders;

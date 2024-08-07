@@ -19,7 +19,6 @@ const List = () => {
     }
 
 
-    // const { data, isPending, isError, error} = useFoodList();
     useEffect( () => {
         fetchList()
     },[])

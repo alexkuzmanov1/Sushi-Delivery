@@ -31,6 +31,22 @@
     outline: none;
 }
 
+.order-item button {
+    background-color: #ffe8e4;
+    border: 1px solid tomato;
+    width: max(10vw, 120px);
+    padding: 10px;
+    outline: none;
+    cursor: pointer;
+}
+  
+@media (max-width: 1000px) {
+    .order-item button {
+        padding: 5px;
+        font-size: 12px;
+    }
+}
+
 @media (max-width:1000px) {
     .order-item{
         font-size: 12px;
@@ -39,6 +55,11 @@
     }
 
     .order-item select{
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .order-item button {
         padding: 5px;
         font-size: 12px;
     }

@@ -1,50 +1,16 @@
 // admin/src/pages/Archive/Archive.jsx
 import React, { useState, useEffect } from 'react';
 import './Archive.css';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { assets } from '../../assets/assets';
-import { format } from 'date-fns';
+import { fetchArchivedOrders } from '../../utils/orderUtils.js';
 
 const Archive = () => {
   const [orders, setOrders] = useState([]);
   const [groupedOrders, setGroupedOrders] = useState({});
-  const url = import.meta.env.VITE_BACKEND_URL;
-
-  const fetchArchivedOrders = async () => {
-    const response = await axios.get(url + '/api/order/archivedorders');
-    if (response.data.success) {
-      const sortedOrders = response.data.data.sort((a, b) => new Date(b.date) - new Date(a.date));
-      setOrders(sortedOrders);
-      groupOrdersByDate(sortedOrders);
-    } else {
-      toast.error(response.data.message);
-    }
-  };
-
-  const groupOrdersByDate = (orders) => {
-    const grouped = orders.reduce((acc, order) => {
-      const date = format(new Date(order.date), 'dd MMMM yyyy');
-      if (!acc[date]) {
-        acc[date] = { orders: [], totalPrice: 0, itemCounts: {} };
-      }
-      acc[date].orders.push(order);
-      acc[date].totalPrice += order.amount;
-
-      order.items.forEach(item => {
-        if (!acc[date].itemCounts[item.name]) {
-          acc[date].itemCounts[item.name] = 0;
-        }
-        acc[date].itemCounts[item.name] += item.quantity;
-      });
-
-      return acc;
-    }, {});
-    setGroupedOrders(grouped);
-  };
 
   useEffect(() => {
-    fetchArchivedOrders();
+    fetchArchivedOrders(setOrders, setGroupedOrders);
   }, []);
 
   return (
