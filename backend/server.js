@@ -7,6 +7,8 @@ import 'dotenv/config';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import ratingRouter from './routes/ratingRouter.js';
+import cron from 'node-cron';
+import { archiveOldOrders } from './controllers/orderController.js';
 
 // app config
 let app = express();
@@ -26,6 +28,9 @@ app.use('/api/user', userRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/ratings', ratingRouter);
+
+//archive orders
+cron.schedule('3 0 * * *', archiveOldOrders);
 
 app.get('/', (req, res) =>{
     res.send('API Working');

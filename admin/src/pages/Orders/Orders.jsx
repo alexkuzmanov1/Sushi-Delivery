@@ -31,6 +31,16 @@ const Orders = () => {
       }
   } 
 
+  const archiveOrderHandler = async (orderId) => {
+    const response = await axios.post(url + '/api/order/archiveorder', { orderId });
+    if (response.data.success) {
+      toast.success('Order archived successfully');
+      await fetchAllOrders();
+    } else {
+      toast.error(response.data.message);
+    }
+  };
+
   useEffect(() => {
     fetchAllOrders();
   },[])
@@ -66,6 +76,7 @@ const Orders = () => {
               <option value="Out for delivery">Out for delivery</option>
               <option value="Delivered">Delivered</option>
             </select>
+            <button onClick={() => archiveOrderHandler(order._id)}>Archive</button>
           </div>
         ))}
       </div>

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import userModel from "../models/userModel.js"; 
 import Stripe from "stripe";
+import archivedOrderModel from "../models/archivedOrderModel.js";
 
 const stripe = Stripe('sk_test_51PhBLwRpnWmfYnVNWUyOvbLYLUZ0gTcyIcKfQuBXXd8Nz3bC1JsthEQ2DErrFtdtPMaSbDNXIUi2r5llozixahYl00VyjgG03U');
 
@@ -130,6 +131,7 @@ const listOrders = async (req, res) => {
 const updateStatus = async (req, res) => {
     try {
         await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status});
+        console.log('Fetching',orders)
         res.json({
             success: true,
             message: 'Status updated'
@@ -145,7 +147,7 @@ const updateStatus = async (req, res) => {
 
 const getArchivedOrders = async (req, res) => {
     try {
-      const orders = await orderModel.find({ status: 'Delivered' }); // Assuming 'Delivered' status means archived
+      const orders = await archivedOrderModel.find(); // Assuming 'Delivered' status means archived
       res.json({
         success: true,
         data: orders
@@ -159,4 +161,39 @@ const getArchivedOrders = async (req, res) => {
     }
   };
 
-export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus, getArchivedOrders }
+  const archiveOldOrders = async () => {
+    try {
+      const oneDayAgo = new Date();
+      oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+  
+      const oldOrders = await orderModel.find({ date: { $lt: oneDayAgo } });
+  
+      if (oldOrders.length > 0) {
+        await archivedOrderModel.insertMany(oldOrders);
+        await orderModel.deleteMany({ date: { $lt: oneDayAgo } });
+        console.log(`Archived ${oldOrders.length} orders.`);
+      }
+    } catch (error) {
+      console.error('Error archiving old orders:', error);
+    }
+  };
+
+  const archiveOrder = async (req, res) => {
+    try {
+      const { orderId } = req.body;
+      const order = await orderModel.findById(orderId);
+  
+      if (order) {
+        await archivedOrderModel.create(order.toObject());
+        await orderModel.findByIdAndDelete(orderId);
+        res.json({ success: true, message: 'Order archived successfully' });
+      } else {
+        res.json({ success: false, message: 'Order not found' });
+      }
+    } catch (error) {
+      console.error('Error archiving order:', error);
+      res.json({ success: false, message: 'Internal Server Error' });
+    }
+  };
+
+export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus, getArchivedOrders, archiveOldOrders, archiveOrder }
