@@ -36,12 +36,12 @@ const Add = () => {
                     <div className="add-category flex-col">
                         <p>Product Category</p>
                         <select onChange={(e) => onChangeHandler(e, setData)} name="category">
-                            <option value="Salad">Salad</option>
-                            <option value="Rolls">Rolls</option>
-                            <option value="Desserts">Desserts</option>
-                            <option value="Sandwich">Sandwich</option>
-                            <option value="Pasta">Pasta</option>
-                            <option value="Noodles">Noodles</option>
+                            <option value="Combo-Sushi">Combo Sushi</option>
+                            <option value="Chickem">Chicken</option>
+                            <option value="California">California</option>
+                            <option value="Philadelphia">Philadelphia</option>
+                            <option value="Hokomaki">Hokomaki</option>
+                            <option value="Sushi-Sauces">Sushi Sauces</option>
                         </select>
                     </div>
                     <div className="add-price flex-col">
