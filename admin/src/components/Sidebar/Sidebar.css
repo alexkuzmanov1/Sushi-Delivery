@@ -25,6 +25,12 @@
     cursor: pointer;
 }
 
+.sidebar-option img{
+    width: 28px;
+    height: 27px;
+
+}
+
 .sidebar-option.active{
     background-color: #fff0ed;
     border-color: tomato;

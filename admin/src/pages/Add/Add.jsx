@@ -11,7 +11,7 @@ const Add = () => {
         name: '',
         description: '',
         price: '',
-        category: 'Salad'
+        category: 'Combo Sushi'
     });
 
     return (
