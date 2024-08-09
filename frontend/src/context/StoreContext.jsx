@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 
 export const StoreContext = createContext(null);
 
@@ -74,6 +75,11 @@ let StoreContextProvider = (props) => {
     };
 
     const handleRatingChange = async (itemId, newValue) => {
+        if(!token) {
+            toast.error('You need to be logged in to rate products');
+            return
+        }
+        
         try {
             const endpoint = `${url}/api/ratings/updateRating`;
             await axios.post(endpoint, {

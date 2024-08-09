@@ -37,11 +37,11 @@ const Add = () => {
                         <p>Product Category</p>
                         <select onChange={(e) => onChangeHandler(e, setData)} name="category">
                             <option value="Combo-Sushi">Combo Sushi</option>
-                            <option value="Chickem">Chicken</option>
+                            <option value="Chicken">Chicken</option>
                             <option value="California">California</option>
                             <option value="Philadelphia">Philadelphia</option>
-                            <option value="Hokomaki">Hokomaki</option>
-                            <option value="Sushi-Sauces">Sushi Sauces</option>
+                            <option value="Hosomaki">Hosomaki</option>
+                            <option value="Sushi Sauces">Sushi Sauces</option>
                         </select>
                     </div>
                     <div className="add-price flex-col">
