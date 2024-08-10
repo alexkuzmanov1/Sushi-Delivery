@@ -23,6 +23,7 @@ This repository contains the source code for a sushi delivery website built usin
 - **Order Placement**: Users can place orders and make payments through Stripe.
 - **Order Tracking**: Customers can track their current orders.
 - **Order History**: Users can view their past orders.
+- **Login credentials for Admin Panel**: admin@admin.com; Admin1234!
 
 ### Admin Panel
 - **Add Items**: Admins can add new sushi items to the menu.
