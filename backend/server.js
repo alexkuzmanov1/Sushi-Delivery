@@ -20,15 +20,15 @@ app.use(express.json());
 app.use(cors());
 
 // Ensure upload directory exists
-const uploadDir = '/persistent/uploads';
+const uploadDir = '/var/data/uploads';
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-//db connection
+// db connection
 connectDB();
 
-//api endopoints
+// api endpoints
 app.use('/api/food', foodRouter);
 app.use('/images', express.static(uploadDir));
 app.use('/api/user', userRouter);
@@ -36,7 +36,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/ratings', ratingRouter);
 
-//archive orders
+// archive orders
 cron.schedule('3 0 * * *', archiveOldOrders);
 
 app.get('/', (req, res) =>{
