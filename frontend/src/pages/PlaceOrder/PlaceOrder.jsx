@@ -55,7 +55,6 @@ const PlaceOrder = () => {
       window.location.replace(session_url);
     } else {
       alert('Internal Server Error');
-      console.log(response.data.message);
     }
   }
 

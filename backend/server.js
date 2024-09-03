@@ -9,6 +9,7 @@ import orderRouter from './routes/orderRoute.js';
 import ratingRouter from './routes/ratingRouter.js';
 import cron from 'node-cron';
 import { archiveOldOrders } from './controllers/orderController.js';
+import fs from 'fs';
 
 // app config
 let app = express();
@@ -18,12 +19,18 @@ let port = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cors());
 
+// Ensure upload directory exists
+const uploadDir = '/var/data/uploads';
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
 //db connection
 connectDB();
 
 //api endopoints
 app.use('/api/food', foodRouter);
-app.use('/images', express.static('uploads'));
+app.use('/images', express.static(uploadDir));
 app.use('/api/user', userRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);

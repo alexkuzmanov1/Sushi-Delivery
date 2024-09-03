@@ -4,19 +4,17 @@ import multer from "multer";
 
 let foodRouter = express.Router();
 
-
-//image storage engine
-
+// Image storage engine
 let storage = multer.diskStorage({
-    destination:'uploads',
-    filename:(req,file,callback)=>{
-        return callback(null, `${Date.now()}${file.originalname}`)
+    destination: '/var/data/uploads', // Use the persistent disk path
+    filename: (req, file, callback) => {
+        return callback(null, `${Date.now()}${file.originalname}`);
     }
-})
+});
 
-let upload = multer({storage:storage});
+let upload = multer({ storage: storage });
 
-foodRouter.post('/add',upload.single('image'), addFood);
+foodRouter.post('/add', upload.single('image'), addFood);
 foodRouter.get('/list', listFood);
 foodRouter.post('/remove', removeFood);
 

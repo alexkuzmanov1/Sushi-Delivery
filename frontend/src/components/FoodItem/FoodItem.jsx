@@ -23,11 +23,9 @@ const FoodItem = ({id, name, price, description, image}) => {
 
     const handleItemClick = () => {
       setShowPopup(true);
-      console.log("Item clicked, showPopup set to true");
     }
   
     const handleClosePopup = () => {
-      console.log("Popup closed");
       setShowPopup(false);
     }
   
