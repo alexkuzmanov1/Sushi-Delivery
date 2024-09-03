@@ -41,7 +41,7 @@ let StoreContextProvider = (props) => {
                 total += itemInfo.price * cartItems[item];
             }
         }
-        return total;
+        return total.toFixed(2);
     };
 
     let [loading, setLoading] = useState(false);

@@ -10,8 +10,9 @@ const Footer = () => {
             <img src={assets.logo} alt="" />
             <p>&copy; 2024 Friends. All rights reserved. | Crafted with love and the freshest ingredients.</p>
             <div className="footer-social-icons">
-                <img src={assets.facebook_icon} alt="" />
-                <img src={assets.twitter_icon} alt="" />
+            <a href="https://www.facebook.com/yourfrirndstoday" target="_blank" rel="noopener noreferrer">
+                    <img src={assets.facebook_icon} alt="Facebook" />
+                </a>                <img src={assets.twitter_icon} alt="" />
                 <img src={assets.linkedin_icon} alt="" />
             </div>
         </div>
