@@ -29,7 +29,7 @@ connectDB();
 
 // api endpoints
 app.use('/api/food', foodRouter);
-app.use('/images', express.static(uploadDir));
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/user', userRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
