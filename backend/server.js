@@ -20,9 +20,8 @@ app.use(express.json());
 app.use(cors());
 
 // Ensure upload directory exists
-const uploadDir = '/var/data/uploads';
+const uploadDir = '/var/data/';
 if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 // db connection
