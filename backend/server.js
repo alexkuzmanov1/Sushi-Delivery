@@ -10,6 +10,12 @@ import ratingRouter from './routes/ratingRouter.js';
 import cron from 'node-cron';
 import { archiveOldOrders } from './controllers/orderController.js';
 import fs from 'fs';
+import path from 'path'; // Import the path module
+import { fileURLToPath } from 'url';
+
+// Get __dirname equivalent in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // app config
 let app = express();
@@ -20,8 +26,9 @@ app.use(express.json());
 app.use(cors());
 
 // Ensure upload directory exists
-const uploadDir = '/var/data/';
+const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 // db connection
@@ -29,7 +36,7 @@ connectDB();
 
 // api endpoints
 app.use('/api/food', foodRouter);
-app.use('/images', express.static(path.join(__dirname, 'uploads')));
+app.use('/images', express.static(uploadDir));
 app.use('/api/user', userRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
