@@ -7,7 +7,7 @@ services:
     startCommand: 'npm run start'
     disk:
       name: persistent-disk
-      mountPath: /var/data
+      mountPath: /persistent
     envVars:
       - key: MONGODB_URI
         value: ${MONGODB_URI}

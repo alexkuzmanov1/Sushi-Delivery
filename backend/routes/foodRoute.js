@@ -6,7 +6,7 @@ let foodRouter = express.Router();
 
 // Image storage engine
 let storage = multer.diskStorage({
-    destination: '/var/data/uploads', // Use the persistent disk path
+    destination: '/persistent/uploads', // Use the persistent disk path
     filename: (req, file, callback) => {
         return callback(null, `${Date.now()}${file.originalname}`);
     }
