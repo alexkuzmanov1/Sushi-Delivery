@@ -11,8 +11,8 @@ let foodRouter = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Define a writable directory
-const uploadDir = path.join(__dirname, '..', 'uploads');
+// Define a writable directory on the persistent disk
+const uploadDir = '/var/data/uploads';
 
 // Ensure upload directory exists
 if (!fs.existsSync(uploadDir)) {

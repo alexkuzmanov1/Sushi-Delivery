@@ -25,8 +25,8 @@ let port = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cors());
 
-// Ensure upload directory exists
-const uploadDir = path.join(__dirname, 'uploads');
+// Ensure upload directory exists on the persistent disk
+const uploadDir = '/var/data/uploads';
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -36,7 +36,7 @@ connectDB();
 
 // api endpoints
 app.use('/api/food', foodRouter);
-app.use('/images', express.static(uploadDir));
+app.use('/images', express.static(uploadDir)); // Serve static files from the uploads directory
 app.use('/api/user', userRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
